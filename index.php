@@ -1,4 +1,6 @@
 <?php
+    require("php/funcoes.php");
+    $conexao = mysqli_connect("localhost", "root", "", "sistemaseguranca");
     $email = isset($_POST["email"]);
     $senha = isset($_POST["senha"]);
 
@@ -6,7 +8,21 @@
     $result = mysqli_query($conexao, $query);
 
     if(!$result){
-        
+        if(validaSenha("Teste.123")){
+            echo "Teste.123 valida";
+        }
+        if(validaSenha("Teste")){
+            echo "Teste valida";
+        }
+        if(validaSenha("teste.123")){
+            echo "teste.123 valida";
+        }
+        if(validaSenha("Teste.")){
+            echo "Teste. valida";
+        }
+        if(validaSenha("Teste123")){
+            echo "Teste123 valida";
+        }
     }else{
         ?>
             <script>
@@ -25,9 +41,9 @@
 </head>
 <body>
     <h2>Login</h2>
-    <form method="post" action="">
+    <form method="post" action="index.php">
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" value="teste@teste.com" required><br><br>
+        <input type="email" id="email" name="email" value="vinicius@gmail.com" required><br><br>
         <label for="senha">Senha:</label><br>
         <input type="password" id="senha" name="senha" required>
         <p id="erroLogin"></p>
