@@ -1,34 +1,45 @@
 <?php
-require("php/funcoes.php");
-$conexao = mysqli_connect("localhost", "root", "", "sistemaseguranca", 3307);
-$email = isset($_POST["email"]);
-$senha = isset($_POST["senha"]);
+require_once ("php/funcoes.php");
+$conexao = mysqli_connect("localhost", "root", "", "sistemaseguranca", 3306);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
 
-$query = "SELECT * FROM Usuario WHERE email = '$email' AND senha = '$senha'";
-$result = mysqli_query($conexao, $query);
+    $query = "SELECT * FROM Usuario WHERE email = '$email' AND senha = '$senha'";
+    $result = mysqli_query($conexao, $query);
 
-if (!$result) {
-    if (validaSenha("Teste.123")) {
-        echo "Teste.123 valida";
+    
+
+    if (mysqli_num_rows($result) == 1) {
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row[1] == $email && $row[2] == $senha) {
+                ?>
+                <script async>
+                    //label = document.getElementsByClassName("labelErro");
+                    //document.getElementById('erroLogin').innerText = 'Login bem sucedido';
+                    alert('Login bem sucedido!');
+                </script>
+                <?php
+            } else {
+                ?>
+                <script async>
+                    //label = document.getElementsByClassName("labelErro");
+                    //document.getElementById('erroLogin').innerText = 'Credenciais inválidas. Por favor, tente novamente.';
+                    alert('Credenciais inválidas. Por favor, tente novamente.');
+                </script>
+                <?php
+            }
+            break;
+        }
+    } else {
+        ?>
+        <script async>
+            //label = document.getElementsByClassName("labelErro");
+            //label.innerText = 'Credenciais inválidas. Por favor, tente novamente.';
+            alert('Credenciais inválidas. Por favor, tente novamente.');
+        </script>
+        <?php
     }
-    if (validaSenha("Teste")) {
-        echo "Teste valida";
-    }
-    if (validaSenha("teste.123")) {
-        echo "teste.123 valida";
-    }
-    if (validaSenha("Teste.")) {
-        echo "Teste. valida";
-    }
-    if (validaSenha("Teste123")) {
-        echo "Teste123 valida";
-    }
-} else {
-?>
-    <script>
-        document.getElementById('erroLogin').innerText("Email ou senha incorretos, tente novamente!");
-    </script>
-<?php
 }
 ?>
 
@@ -89,7 +100,7 @@ if (!$result) {
     .login-container input[type="submit"]:hover {
         background-color: #45a049;
     }
-    
+
     .login-container label {
         text-align: left;
         display: block;
@@ -102,12 +113,12 @@ if (!$result) {
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form method="post" action="index.php">
+        <form method="post" action="">
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="email" value="vinicius@gmail.com" required><br><br>
             <label for="senha">Senha:</label><br>
             <input type="password" id="senha" name="senha" required>
-            <p id="erroLogin"></p>
+            <p name="labelErro" id="erroLogin" class="labelErro"></p>
             <br><br>
             <input type="submit" value="Login">
         </form>
