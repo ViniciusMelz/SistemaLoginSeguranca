@@ -1,12 +1,11 @@
 <?php
 require_once ("php/funcoes.php");
-$conexao = mysqli_connect("localhost", "root", "", "sistemaseguranca", 3306);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
     $query = "SELECT * FROM Usuario WHERE email = '$email' AND senha = '$senha'";
-    $result = mysqli_query($conexao, $query);
+    $result = mysqli_query(conectarBanco(), $query);
 
     
 

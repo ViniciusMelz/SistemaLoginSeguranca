@@ -1,4 +1,14 @@
 <?php
+
+    function conectarBanco() {
+        $servidor = "localhost";
+        $usuario = "root";
+        $senha = "";
+        $banco = "sistemaseguranca";
+        $porta = 3306;
+        $conexao = mysqli_connect($servidor, $usuario, $senha, $banco, $porta);
+        return $conexao;
+    }
     function verificaMaisculaeMinuscula($senha) {
         if (ctype_lower($senha) && ctype_upper($senha)) {
             return true;
