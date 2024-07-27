@@ -1,5 +1,17 @@
 <?php
 require_once ("php/funcoes.php");
+session_start();
+if (isset($_SESSION['trocouSenha'])) {
+    if ($_SESSION['trocouSenha']) {
+        $_SESSION['trocouSenha'] = false;
+        ?>
+        <script async>
+            alert("Senha trocada com sucesso, logue novamente!");
+        </script>
+        <?php
+    }
+
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
@@ -10,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               AND senha = '$senha'";
     $result = mysqli_query(conectarBanco(), $query);
 
-    
+
 
     if (mysqli_num_rows($result) == 1) {
         while ($row = mysqli_fetch_array($result)) {
@@ -18,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ?>
                 <script>
                     alert('Login bem sucedido!');
-                </script>                
+                </script>
                 <?php
                 session_start();
                 $_SESSION['email'] = $email;
@@ -50,75 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-
-    .login-container {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 300px;
-        text-align: center;
-    }
-
-    .login-container h2 {
-        margin-bottom: 20px;
-    }
-
-    .login-container input[type="email"],
-    .login-container input[type="password"] {
-        width: calc(110% - 20px);
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-sizing: border-box;
-    }
-
-    .login-container input[type="submit"] {
-        width: 100%;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    .login-container input[type="submit"]:hover {
-        background-color: #45a049;
-    }
-
-    .login-container label {
-        text-align: left;
-        display: block;
-        margin-bottom: 3px;
-        font-weight: bold;
-    }
-</style>
-
 
 <body>
     <div class="login-container">
         <h2>Login</h2>
         <form method="post" action="">
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" value="vinicius@gmail.com" required><br><br>
-            <label for="senha">Senha:</label><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="vinicius@gmail.com" required>
+            <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" required>
-            <br><br>
+            <br>
             <input type="submit" value="Login">
         </form>
     </div>

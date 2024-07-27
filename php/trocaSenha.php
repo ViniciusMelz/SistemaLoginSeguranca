@@ -5,6 +5,7 @@ $id_usuario = $_SESSION['id_usuario'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nova_senha = $_POST["nova_senha"];
     $repeticao_senha = $_POST["confirmar-senha"];
+    echo $nova_senha;
 
     if ($nova_senha != $repeticao_senha) {
         ?>
@@ -38,12 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   SET senha = '$nova_senha'
                   WHERE usuario.id = '$id_usuario'";
             $result = mysqli_query(conectarBanco(), $query);
-            ?>
-            <script async>
-                alert("Senha trocada com Sucesso, Logue novamente!");
-            </script>
-            <?php
-            sleep(2);
+            $_SESSION['trocouSenha'] = true;
             header('Location: ../index.php');
         } else {
             ?>
@@ -63,76 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Senha</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../style/style.css">
 </head>
-
-<style>
-    /* Reset básico */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .container {
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 400px;
-        width: 100%;
-    }
-
-    h1 {
-        margin-bottom: 20px;
-        font-size: 24px;
-        color: #333;
-        text-align: center;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    label {
-        margin-bottom: 5px;
-        font-size: 14px;
-        color: #555;
-    }
-
-    input[type="password"] {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin-bottom: 15px;
-        font-size: 16px;
-    }
-
-    button {
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        background-color: #007bff;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-</style>
 
 <body>
     <div class="container">
@@ -146,6 +74,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <button type="submit">Alterar Senha</button>
         </form>
+    </div>
+
+    <div class="requisitos-senha">
+        <h3 style="text-align: center">A senha deve atender aos seguintes requisitos:</h3>
+        <p>
+        • Conter letras maiúsculas e minúsculas. <br>
+        • Conter pelo menos 3 números. <br>
+        • Conter pelo menos um caractere especial. <br>
+        • Ter o tamanho mínimo de 8 caracteres. <br>
+        • A senha não deve ser igual as ultimas 5 senhas.
+        </p>
     </div>
 </body>
 
