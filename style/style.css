@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-container, .container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+form label {
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+form input[type="submit"],
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+form input[type="submit"]:hover,
+form button:hover {
+    background-color: #45a049;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 300px;
+    justify-content: center;
+}
+
+.buttons-container a button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.buttons-container a button:hover {
+    background-color: #45a049;
+}
+
+.requisitos-senha {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.requisitos-senha p {
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 400px) {
+    .login-container, .container, .requisitos-senha, .buttons-container {
+        width: 100%;
+    }
+}
+
+#btnLoginRealizado{
+    width: 150px;
+    margin: 10px;
+}

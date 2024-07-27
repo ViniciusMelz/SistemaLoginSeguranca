@@ -34,13 +34,16 @@ if ($diferencaDatas > 45) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Menu</title>
+    <link rel="stylesheet" href="../style/style.css">
 </head>
 
 <body>
     <h1><?php echo $text ?></h1>
-    <a href="trocaSenha.php"><button>Trocar Senha</button></a>
-    <a href="../index.php"><button>Sair</button></a>
+    <div class="buttons-container">
+        <a href="trocaSenha.php"><button id="btnLoginRealizado">Trocar Senha</button></a>
+        <a href="../index.php"><button id="btnLoginRealizado">Sair</button></a>
+    </div>
 </body>
 
 </html>
