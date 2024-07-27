@@ -1,36 +1,59 @@
 <?php
-    require_once("php/funcoes.php");
+require_once ("funcoes.php");
+session_start();
+$id_usuario = $_SESSION['id_usuario'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nova_senha = $_POST["nova_senha"];
+    $repeticao_senha = $_POST["confirmar-senha"];
 
-    $senha_nova = $_POST["senha_nova"];
+    if ($nova_senha != $repeticao_senha) {
+        ?>
+        <script async>
+            alert("As senhas digitadas são diferentes, tente novamente!");
+        </script>
+        <?php
+    } else {
+        $query = "SELECT senha_antiga
+              FROM senhas_antigas 
+              WHERE id_usuario = '$id_usuario' 
+              ORDER BY id DESC
+              LIMIT 5";
+        $result = mysqli_query(conectarBanco(), $query);
 
-
-    $query = "SELECT senha_antiga FROM senha_antigas";
-    $result = mysqli_query(conectarBanco(), $query);
-
-
-    // A ideia aqui é verificar se a senha nova que a pessoa digitou
-    // é uma senha antiga já presente no banco de dados. Se retornar true
-    // a senha está no banco e não pode ser aceita. Também verifica se 
-    // a senha nova corresponde aos requisitos.
-    // Recomendo testar para ver se está funcionando
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_array($result)) {
-            if ($row[1] == $senha_nova && validaSenha($senha_nova) == false) {
-                ?>
-                    <script async>
-                        alert("Senha inválida, tente novamente")
-                    </script>
-                <?
-            } else {
-                ?>
-                    <script async>
-                        alert("Senha atualizada")
-                    </script>
-                <?
+        if (validaSenha($nova_senha) == false) {
+            $senhaValida = false;
+        } else {
+            while ($row = mysqli_fetch_array($result)) {
+                if ($row[0] == $nova_senha) {
+                    $senhaValida = false;
+                    break;
+                } else {
+                    $senhaValida = true;
+                }
             }
         }
-    }
 
+        if ($senhaValida) {
+            $query = "UPDATE usuario
+                  SET senha = '$nova_senha'
+                  WHERE usuario.id = '$id_usuario'";
+            $result = mysqli_query(conectarBanco(), $query);
+            ?>
+            <script async>
+                alert("Senha trocada com Sucesso, Logue novamente!");
+            </script>
+            <?php
+            sleep(2);
+            header('Location: ../index.php');
+        } else {
+            ?>
+            <script async>
+                alert("Senha digitada é inválida, não atende aos requisitos!");
+            </script>
+            <?php
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -114,7 +137,7 @@
 <body>
     <div class="container">
         <h1>Alterar Senha</h1>
-        <form action="/alterar-senha" method="POST">
+        <form action="" method="POST">
             <label for="nova_senha">Nova Senha:</label>
             <input type="password" id="nova_senha" name="nova_senha" required>
 
