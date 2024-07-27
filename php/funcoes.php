@@ -9,26 +9,45 @@
         $conexao = mysqli_connect($servidor, $usuario, $senha, $banco, $porta);
         return $conexao;
     }
-    function verificaMaisculaeMinuscula($senha) {
-        if (ctype_lower($senha) && ctype_upper($senha)) {
-            return true;
-        } else return false;
-        
+    function verificaMinuscula($senha):bool {
+        $arr1 = str_split($senha);
+        foreach ($arr1 as $caracter) {
+            if (ctype_lower($caracter)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    function verificaSeTemEspecial($senha) {
-        if (ctype_punct($senha)) {
-            return true;
-        } else return false;
+    function verificaMaiscula($senha):bool {
+        $arr1 = str_split($senha);
+        foreach ($arr1 as $caracter) {
+            if (ctype_upper($caracter)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    function verificaSeTem8caracter($senha) {
+    function verificaSeTemEspecial($senha):bool {
+        $arr1 = str_split($senha);
+        foreach ($arr1 as $caracter) {
+            if (ctype_punct($caracter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function verificaSeTem8caracter($senha):bool {
         if (count_chars($senha) >= 8) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
-    function verificaSeTem3numeros($senha) {
+    function verificaSeTem3numeros($senha):bool {
         $arr1 = str_split($senha);
         $counter = 0;
         foreach ($arr1 as $caracter) {
@@ -39,16 +58,21 @@
         
         if ($counter >= 3) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
-    function validaSenha($senha) {
-        if (verificaMaisculaeMinuscula($senha) 
+    function validaSenha($senha):bool {
+        if (verificaMaiscula($senha) 
+            && verificaMinuscula($senha)
             && verificaSeTemEspecial($senha) 
             && verificaSeTem8caracter($senha) 
             && verificaSeTem3numeros($senha)) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     
