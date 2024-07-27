@@ -4,7 +4,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    $query = "SELECT * FROM Usuario WHERE email = '$email' AND senha = '$senha'";
+    $query = "SELECT * 
+              FROM Usuario 
+              WHERE email = '$email' 
+              AND senha = '$senha'";
     $result = mysqli_query(conectarBanco(), $query);
 
     
@@ -13,17 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         while ($row = mysqli_fetch_array($result)) {
             if ($row[1] == $email && $row[2] == $senha) {
                 ?>
-                <script async>
-                    //label = document.getElementsByClassName("labelErro");
-                    //document.getElementById('erroLogin').innerText = 'Login bem sucedido';
+                <script>
                     alert('Login bem sucedido!');
-                </script>
+                </script>                
                 <?php
+                session_start();
+                $_SESSION['email'] = $email;
+                $_SESSION['senha'] = $senha;
+                header('location: php/loginRealizado.php');
             } else {
                 ?>
-                <script async>
-                    //label = document.getElementsByClassName("labelErro");
-                    //document.getElementById('erroLogin').innerText = 'Credenciais inválidas. Por favor, tente novamente.';
+                <script>
                     alert('Credenciais inválidas. Por favor, tente novamente.');
                 </script>
                 <?php
@@ -32,9 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } else {
         ?>
-        <script async>
-            //label = document.getElementsByClassName("labelErro");
-            //label.innerText = 'Credenciais inválidas. Por favor, tente novamente.';
+        <script>
             alert('Credenciais inválidas. Por favor, tente novamente.');
         </script>
         <?php
@@ -117,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="email" id="email" name="email" value="vinicius@gmail.com" required><br><br>
             <label for="senha">Senha:</label><br>
             <input type="password" id="senha" name="senha" required>
-            <p name="labelErro" id="erroLogin" class="labelErro"></p>
             <br><br>
             <input type="submit" value="Login">
         </form>
