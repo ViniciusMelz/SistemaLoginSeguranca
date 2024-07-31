@@ -5,7 +5,6 @@ $id_usuario = $_SESSION['id_usuario'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nova_senha = $_POST["nova_senha"];
     $repeticao_senha = $_POST["confirmar-senha"];
-    echo $nova_senha;
 
     if ($nova_senha != $repeticao_senha) {
         ?>
